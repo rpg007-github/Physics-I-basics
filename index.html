@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Physics I — Essential Study Reference</title>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#f6f8f9;--bg-card:#fff;--text:#2c2c2c;--text-muted:#6b6b6b;--accent:#0e7c6b;--accent-dark:#095e52;--accent-light:#e4f5f1;--border:#d8dfe2;--border-light:#edf0f2;--highlight:#fef8e6;--highlight-border:#e8c84a;--mnemonic-bg:#edf7ee;--mnemonic-border:#6bbd72;--formula-bg:#e9f4f2;--formula-border:#3ba594;--shadow:0 1px 3px rgba(0,0,0,.06),0 4px 12px rgba(0,0,0,.04);--shadow-hover:0 2px 8px rgba(0,0,0,.08),0 8px 24px rgba(0,0,0,.06)}
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:16px;-webkit-font-smoothing:antialiased}
+    .hero{background:linear-gradient(135deg,#063b33 0%,#0e7c6b 40%,#1a9e89 100%);color:#fff;padding:4rem 2rem 3.5rem;text-align:center;position:relative;overflow:hidden}
+    .hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");pointer-events:none}
+    .hero h1{font-family:'Crimson Pro',serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:700;letter-spacing:-.02em;position:relative}
+    .hero .subtitle{font-size:1.15rem;opacity:.85;margin-top:.5rem;font-weight:300;position:relative}
+    .hero .tagline{display:inline-block;margin-top:1rem;background:rgba(255,255,255,.15);padding:.35rem 1.2rem;border-radius:20px;font-size:.85rem;font-weight:500;letter-spacing:.03em;position:relative}
+    .container{max-width:1100px;margin:0 auto;padding:2rem 1.5rem 4rem}
+    .toc{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:2rem;margin-bottom:2.5rem;box-shadow:var(--shadow)}
+    .toc h2{font-family:'Crimson Pro',serif;font-size:1.5rem;color:var(--accent);margin-bottom:1rem;font-weight:600}
+    .toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:.5rem}
+    .toc-grid a{display:block;padding:.5rem .75rem;color:var(--text);text-decoration:none;border-radius:6px;font-size:.95rem;transition:all .2s}
+    .toc-grid a:hover{background:var(--accent-light);color:var(--accent)}
+    .toc-grid a .toc-num{font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--accent);margin-right:.5rem;font-weight:500}
+    .section-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:2rem 2rem 1.75rem;margin-bottom:2rem;box-shadow:var(--shadow);transition:box-shadow .3s,transform .3s}
+    .section-card:hover{box-shadow:var(--shadow-hover);transform:translateY(-2px)}
+    .section-card h2{font-family:'Crimson Pro',serif;font-size:1.6rem;color:var(--accent);margin-bottom:.25rem;font-weight:600;display:flex;align-items:center;gap:.6rem}
+    .section-card h2 .sec-num{font-family:'JetBrains Mono',monospace;font-size:.75rem;background:var(--accent);color:#fff;padding:.15rem .55rem;border-radius:4px;font-weight:500}
+    .section-card h3{font-family:'Crimson Pro',serif;font-size:1.2rem;color:var(--accent-dark);margin:1.4rem 0 .5rem;font-weight:600}
+    .section-card p{margin-bottom:.8rem;line-height:1.75}
+    .fact-table{width:100%;border-collapse:collapse;margin:1rem 0 1.25rem;font-size:.92rem}
+    .fact-table th{background:var(--accent);color:#fff;padding:.6rem .8rem;text-align:left;font-weight:600;font-size:.85rem;letter-spacing:.03em}
+    .fact-table th:first-child{border-radius:6px 0 0 0}.fact-table th:last-child{border-radius:0 6px 0 0}
+    .fact-table td{padding:.55rem .8rem;border-bottom:1px solid var(--border-light)}
+    .fact-table tr:nth-child(even) td{background:#f4f7f8}
+    .fact-table tr:hover td{background:var(--accent-light)}
+    .fact-table code{font-family:'JetBrains Mono',monospace;font-size:.85rem;background:var(--formula-bg);padding:.1rem .4rem;border-radius:3px}
+    .formula-box{background:var(--formula-bg);border-left:4px solid var(--formula-border);padding:1rem 1.25rem;margin:1rem 0;border-radius:0 8px 8px 0}
+    .formula-box .formula-label{font-family:'Crimson Pro',serif;font-weight:600;color:var(--accent-dark);font-size:.9rem;margin-bottom:.3rem}
+    .formula-box code{font-family:'JetBrains Mono',monospace;font-size:.95rem;display:block;margin-top:.3rem}
+    .mnemonic-box{background:var(--mnemonic-bg);border-left:4px solid var(--mnemonic-border);padding:1rem 1.25rem;margin:1rem 0;border-radius:0 8px 8px 0}
+    .mnemonic-box .mnemonic-label{font-family:'Crimson Pro',serif;font-weight:600;color:#2d7a36;font-size:.9rem;margin-bottom:.3rem}
+    .highlight-box{background:var(--highlight);border-left:4px solid var(--highlight-border);padding:1rem 1.25rem;margin:1rem 0;border-radius:0 8px 8px 0}
+    .highlight-box strong{color:#8a6d0b}
+    .interactive-section{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:2rem;margin-bottom:2rem;box-shadow:var(--shadow)}
+    .interactive-section h2{font-family:'Crimson Pro',serif;font-size:1.6rem;color:var(--accent);margin-bottom:1rem;font-weight:600}
+    .quiz-progress{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;font-size:.9rem;color:var(--text-muted)}
+    .quiz-progress-bar{flex:1;height:8px;background:var(--border-light);border-radius:4px;overflow:hidden}
+    .quiz-progress-fill{height:100%;background:var(--accent);border-radius:4px;transition:width .4s;width:0}
+    .quiz-score{font-family:'JetBrains Mono',monospace;font-weight:500;color:var(--accent)}
+    .quiz-question p{font-weight:600;margin-bottom:.75rem;font-size:1.02rem}
+    .quiz-options label{display:block;padding:.65rem 1rem;margin-bottom:.4rem;border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:all .2s;font-size:.95rem}
+    .quiz-options label:hover{background:var(--accent-light);border-color:var(--accent)}
+    .quiz-options input[type="radio"]{margin-right:.6rem}
+    .quiz-options label.correct{background:#e8f5e9;border-color:#4caf50}
+    .quiz-options label.incorrect{background:#ffeef0;border-color:#e57373}
+    .quiz-explanation{margin-top:.75rem;padding:.75rem 1rem;background:#eef7f5;border-radius:8px;font-size:.9rem;color:#555;display:none}
+    .quiz-btn{display:inline-block;padding:.6rem 1.5rem;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:.95rem;cursor:pointer;font-family:'Source Sans 3',sans-serif;font-weight:500;transition:background .2s;margin-top:.5rem}
+    .quiz-btn:hover{background:var(--accent-dark)}
+    .quiz-nav{display:flex;gap:.75rem;margin-top:1rem}
+    .quiz-result{text-align:center;padding:2rem}
+    .quiz-result h3{font-family:'Crimson Pro',serif;font-size:1.8rem;color:var(--accent);margin-bottom:.5rem}
+    .fc-filters{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.5rem}
+    .fc-filter-btn{padding:.4rem 1rem;border:1px solid var(--border);background:#fff;border-radius:20px;font-size:.85rem;cursor:pointer;font-family:'Source Sans 3',sans-serif;transition:all .2s}
+    .fc-filter-btn:hover{border-color:var(--accent);color:var(--accent)}
+    .fc-filter-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+    .fc-container{display:flex;flex-direction:column;align-items:center}
+    .fc-card-wrapper{width:100%;max-width:500px;height:300px;perspective:1200px;margin-bottom:1rem;cursor:pointer}
+    .fc-card{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform .6s}
+    .fc-card.flipped{transform:rotateY(180deg)}
+    .fc-front,.fc-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:12px;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:2rem;text-align:center}
+    .fc-front{background:linear-gradient(135deg,var(--accent-light),#dff0ed);border:2px solid var(--accent)}
+    .fc-front .fc-category{position:absolute;top:1rem;left:1rem;font-size:.75rem;font-family:'JetBrains Mono',monospace;background:var(--accent);color:#fff;padding:.15rem .6rem;border-radius:4px}
+    .fc-front p{font-family:'Crimson Pro',serif;font-size:1.25rem;font-weight:600;color:var(--accent-dark)}
+    .fc-back{background:var(--accent);color:#fff;transform:rotateY(180deg)}
+    .fc-back p{font-size:1.05rem;line-height:1.6}
+    .fc-controls{display:flex;align-items:center;gap:1rem}
+    .fc-nav-btn{padding:.5rem 1.2rem;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:.9rem;cursor:pointer;font-family:'Source Sans 3',sans-serif;transition:background .2s}
+    .fc-nav-btn:hover{background:var(--accent-dark)}
+    .fc-counter{font-family:'JetBrains Mono',monospace;font-size:.9rem;color:var(--text-muted)}
+    .sa-question{margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border-light)}
+    .sa-question:last-child{border-bottom:none}
+    .sa-question p.sa-prompt{font-weight:600;margin-bottom:.75rem;font-size:1.02rem}
+    .sa-question textarea{width:100%;min-height:80px;padding:.75rem 1rem;border:1px solid var(--border);border-radius:8px;font-family:'Source Sans 3',sans-serif;font-size:.95rem;resize:vertical;transition:border-color .2s}
+    .sa-question textarea:focus{outline:none;border-color:var(--accent)}
+    .sa-feedback{margin-top:.75rem;display:none}
+    .sa-score-bar{height:10px;background:var(--border-light);border-radius:5px;overflow:hidden;margin-bottom:.6rem}
+    .sa-score-fill{height:100%;border-radius:5px;transition:width .5s}
+    .sa-score-text{font-family:'JetBrains Mono',monospace;font-size:.85rem;margin-bottom:.5rem}
+    .sa-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.75rem}
+    .sa-tag{padding:.2rem .65rem;border-radius:4px;font-size:.8rem;font-weight:500}
+    .sa-tag.hit{background:#e8f5e9;color:#2e7d32}
+    .sa-tag.miss{background:#f0f0f0;color:#888}
+    .sa-model-toggle{background:none;border:none;color:var(--accent);cursor:pointer;font-size:.9rem;font-family:'Source Sans 3',sans-serif;font-weight:500;padding:0}
+    .sa-model-toggle:hover{text-decoration:underline}
+    .sa-model-answer{margin-top:.5rem;padding:.75rem 1rem;background:#eef7f5;border-radius:8px;font-size:.9rem;display:none;line-height:1.65}
+    .back-to-top{position:fixed;bottom:2rem;right:2rem;width:44px;height:44px;background:var(--accent);color:#fff;border:none;border-radius:50%;font-size:1.2rem;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.2);opacity:0;transition:opacity .3s;z-index:100}
+    .back-to-top.visible{opacity:1}
+    @media(max-width:768px){.container{padding:1.25rem 1rem 3rem}.section-card{padding:1.5rem}.toc-grid{grid-template-columns:1fr}.fact-table{font-size:.85rem}.fact-table th,.fact-table td{padding:.4rem .5rem}.fc-card-wrapper{height:260px}}
+  </style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>Physics I</h1>
+  <div class="subtitle">Essential Study Reference</div>
+  <div class="tagline">The facts you just know</div>
+</div>
+
+<div class="container">
+
+<div class="toc">
+  <h2>Table of Contents</h2>
+  <div class="toc-grid">
+    <a href="#units"><span class="toc-num">01</span>Units, Measurement &amp; Vectors</a>
+    <a href="#kinematics"><span class="toc-num">02</span>Kinematics (1-D &amp; 2-D)</a>
+    <a href="#newton"><span class="toc-num">03</span>Newton's Laws &amp; Forces</a>
+    <a href="#friction"><span class="toc-num">04</span>Friction, Inclines &amp; Circular Motion</a>
+    <a href="#work-energy"><span class="toc-num">05</span>Work, Energy &amp; Power</a>
+    <a href="#momentum"><span class="toc-num">06</span>Momentum &amp; Collisions</a>
+    <a href="#rotation"><span class="toc-num">07</span>Rotational Motion &amp; Torque</a>
+    <a href="#gravity"><span class="toc-num">08</span>Gravity &amp; Orbits</a>
+    <a href="#fluids"><span class="toc-num">09</span>Fluids &amp; Pressure</a>
+    <a href="#thermo"><span class="toc-num">10</span>Temperature &amp; Heat</a>
+    <a href="#waves"><span class="toc-num">11</span>Waves &amp; Sound</a>
+    <a href="#quiz"><span class="toc-num">Q</span>Multiple Choice Quiz</a>
+    <a href="#flashcards"><span class="toc-num">F</span>Flashcards</a>
+    <a href="#short-answer"><span class="toc-num">SA</span>Short Answer Practice</a>
+  </div>
+</div>
+
+<!-- ============ SECTION 01 ============ -->
+<div class="section-card" id="units">
+  <h2><span class="sec-num">01</span>Units, Measurement &amp; Vectors</h2>
+  <p>Physics is built on precise measurement. The SI (International System) defines base units for every fundamental quantity. You need to know these, how to convert between units, and how to use significant figures and dimensional analysis.</p>
+  <h3>Fundamental SI Units</h3>
+  <table class="fact-table">
+    <tr><th>Quantity</th><th>SI Unit</th><th>Symbol</th></tr>
+    <tr><td>Length</td><td>meter</td><td>m</td></tr>
+    <tr><td>Mass</td><td>kilogram</td><td>kg</td></tr>
+    <tr><td>Time</td><td>second</td><td>s</td></tr>
+    <tr><td>Temperature</td><td>kelvin</td><td>K</td></tr>
+    <tr><td>Electric current</td><td>ampere</td><td>A</td></tr>
+    <tr><td>Amount of substance</td><td>mole</td><td>mol</td></tr>
+  </table>
+  <h3>Common Derived Units</h3>
+  <table class="fact-table">
+    <tr><th>Quantity</th><th>Unit</th><th>In Base Units</th></tr>
+    <tr><td>Force</td><td>newton (N)</td><td><code>kg &middot; m/s&sup2;</code></td></tr>
+    <tr><td>Energy / Work</td><td>joule (J)</td><td><code>kg &middot; m&sup2;/s&sup2;</code> = <code>N &middot; m</code></td></tr>
+    <tr><td>Power</td><td>watt (W)</td><td><code>J/s</code></td></tr>
+    <tr><td>Pressure</td><td>pascal (Pa)</td><td><code>N/m&sup2;</code></td></tr>
+    <tr><td>Frequency</td><td>hertz (Hz)</td><td><code>1/s</code></td></tr>
+  </table>
+  <h3>Metric Prefixes</h3>
+  <table class="fact-table">
+    <tr><th>Prefix</th><th>Symbol</th><th>Factor</th></tr>
+    <tr><td>giga-</td><td>G</td><td>10&#8313;</td></tr>
+    <tr><td>mega-</td><td>M</td><td>10&#8310;</td></tr>
+    <tr><td>kilo-</td><td>k</td><td>10&sup3;</td></tr>
+    <tr><td>centi-</td><td>c</td><td>10&#8315;&sup2;</td></tr>
+    <tr><td>milli-</td><td>m</td><td>10&#8315;&sup3;</td></tr>
+    <tr><td>micro-</td><td>&mu;</td><td>10&#8315;&#8310;</td></tr>
+    <tr><td>nano-</td><td>n</td><td>10&#8315;&#8313;</td></tr>
+  </table>
+  <h3>Vectors vs. Scalars</h3>
+  <p>A scalar has magnitude only (speed, mass, energy, temperature). A vector has both magnitude and direction (velocity, acceleration, force, displacement). Vectors are added using component methods: break each vector into x- and y-components using trigonometry, add the components separately, then recombine.</p>
+  <div class="formula-box">
+    <div class="formula-label">Vector Components</div>
+    <code>A_x = A cos&theta;</code>
+    <br><code>A_y = A sin&theta;</code>
+    <br><code>|A| = &radic;(A_x&sup2; + A_y&sup2;)</code>
+    <br><code>&theta; = tan&sup1;(A_y / A_x)</code>
+  </div>
+  <div class="highlight-box">
+    <strong>Significant figures:</strong> In multiplication/division, the answer has the same number of sig figs as the measurement with the fewest. In addition/subtraction, round to the least precise decimal place. All non-zero digits are significant. Zeros between non-zero digits are significant. Trailing zeros after a decimal are significant.
+  </div>
+</div>
+
+<!-- ============ SECTION 02 ============ -->
+<div class="section-card" id="kinematics">
+  <h2><span class="sec-num">02</span>Kinematics (1-D &amp; 2-D)</h2>
+  <p>Kinematics describes motion without worrying about what causes it. You need to know the key variables (displacement, velocity, acceleration, time) and the kinematic equations that relate them under constant acceleration.</p>
+  <h3>Key Definitions</h3>
+  <table class="fact-table">
+    <tr><th>Quantity</th><th>Definition</th><th>Units</th><th>Scalar or Vector?</th></tr>
+    <tr><td>Distance</td><td>Total path length traveled</td><td>m</td><td>Scalar</td></tr>
+    <tr><td>Displacement (&Delta;x)</td><td>Change in position (straight-line, with direction)</td><td>m</td><td>Vector</td></tr>
+    <tr><td>Speed</td><td>Distance / time</td><td>m/s</td><td>Scalar</td></tr>
+    <tr><td>Velocity (v)</td><td>Displacement / time (with direction)</td><td>m/s</td><td>Vector</td></tr>
+    <tr><td>Acceleration (a)</td><td>Change in velocity / time</td><td>m/s&sup2;</td><td>Vector</td></tr>
+  </table>
+  <div class="formula-box">
+    <div class="formula-label">The Big Four Kinematic Equations (constant acceleration)</div>
+    <code>v = v&#8320; + at</code>
+    <br><code>&Delta;x = v&#8320;t + &frac12;at&sup2;</code>
+    <br><code>v&sup2; = v&#8320;&sup2; + 2a&Delta;x</code>
+    <br><code>&Delta;x = &frac12;(v&#8320; + v)t</code>
+  </div>
+  <h3>Free Fall</h3>
+  <p>An object in free fall has acceleration equal to g = 9.8 m/s&sup2; downward (often rounded to 10 m/s&sup2;). Air resistance is ignored. An object dropped from rest has v&#8320; = 0. An object thrown straight up decelerates at g, stops momentarily at the peak, then accelerates back down at g. At the peak, v = 0 but a = g (still accelerating).</p>
+  <h3>Projectile Motion (2-D)</h3>
+  <p>Projectile motion is a combination of constant horizontal velocity and constant vertical acceleration (g downward). The horizontal and vertical components are independent of each other.</p>
+  <div class="formula-box">
+    <div class="formula-label">Projectile Motion</div>
+    <code>Horizontal: x = v&#8320;cos&theta; &middot; t (constant velocity, a_x = 0)</code>
+    <br><code>Vertical: y = v&#8320;sin&theta; &middot; t - &frac12;gt&sup2; (accelerating at g)</code>
+    <br><code>Range (level ground): R = v&#8320;&sup2; sin(2&theta;) / g</code>
+  </div>
+  <div class="mnemonic-box">
+    <div class="mnemonic-label">Remember</div>
+    Maximum range occurs at <strong>45&deg;</strong> launch angle (on level ground). Complementary angles (e.g., 30&deg; and 60&deg;) give the same range but different flight times and peak heights.
+  </div>
+</div>
+
+<!-- ============ SECTION 03 ============ -->
+<div class="section-card" id="newton">
+  <h2><span class="sec-num">03</span>Newton's Laws &amp; Forces</h2>
+  <p>Newton's three laws form the foundation of classical mechanics. You need to know each law, how to draw free-body diagrams, and how to apply F = ma to solve problems.</p>
+  <h3>The Three Laws</h3>
+  <table class="fact-table">
+    <tr><th>Law</th><th>Statement</th><th>Key Idea</th></tr>
+    <tr><td>1st (Inertia)</td><td>An object at rest stays at rest, and an object in motion stays in motion at constant velocity, unless acted on by a net external force.</td><td>No net force = no acceleration</td></tr>
+    <tr><td>2nd (F = ma)</td><td>The net force on an object equals its mass times its acceleration.</td><td><code>F_net = ma</code></td></tr>
+    <tr><td>3rd (Action-Reaction)</td><td>For every action, there is an equal and opposite reaction.</td><td>Forces come in pairs, on different objects</td></tr>
+  </table>
+  <div class="formula-box">
+    <div class="formula-label">Newton's Second Law</div>
+    <code>&Sigma;F = ma</code>
+    <br><br>Net force is the vector sum of all forces. If &Sigma;F = 0, the object is in equilibrium (a = 0, which means at rest or constant velocity).
+  </div>
+  <h3>Common Forces</h3>
+  <table class="fact-table">
+    <tr><th>Force</th><th>Symbol</th><th>Description</th></tr>
+    <tr><td>Weight</td><td>W = mg</td><td>Gravitational force, always directed downward. g = 9.8 m/s&sup2;</td></tr>
+    <tr><td>Normal force</td><td>N or F_N</td><td>Contact force perpendicular to the surface. Adjusts to prevent penetration.</td></tr>
+    <tr><td>Tension</td><td>T</td><td>Pull force transmitted through a string, rope, or cable</td></tr>
+    <tr><td>Friction</td><td>f</td><td>Resists relative motion between surfaces in contact</td></tr>
+    <tr><td>Applied force</td><td>F_app</td><td>Any external push or pull applied to the object</td></tr>
+    <tr><td>Spring force</td><td>F_s = -kx</td><td>Hooke's law: restoring force proportional to displacement</td></tr>
+  </table>
+  <div class="highlight-box">
+    <strong>Free-body diagrams:</strong> Draw the object as a dot. Draw all forces acting ON the object as arrows starting from the dot, with length proportional to magnitude. Do not include forces the object exerts on other things. Label every force. Choose a coordinate system. This is the single most important problem-solving tool in mechanics.
+  </div>
+  <div class="formula-box">
+    <div class="formula-label">Weight</div>
+    <code>W = mg</code>
+    <br>Mass (kg) is a measure of inertia. Weight (N) is the gravitational force. They are not the same. An astronaut has the same mass on the Moon but less weight because g is smaller.
+  </div>
+</div>
+
+<!-- ============ SECTION 04 ============ -->
+<div class="section-card" id="friction">
+  <h2><span class="sec-num">04</span>Friction, Inclines &amp; Circular Motion</h2>
+  <h3>Friction</h3>
+  <p>Friction opposes the relative motion (or tendency to move) between two surfaces in contact. Static friction prevents motion from starting. Kinetic friction acts on an object already sliding. Static friction can vary up to a maximum value; kinetic friction is roughly constant.</p>
+  <div class="formula-box">
+    <div class="formula-label">Friction Equations</div>
+    <code>f_s &le; &mu;_s N</code> (static, maximum)
+    <br><code>f_k = &mu;_k N</code> (kinetic)
+    <br><br>&mu;_s is always greater than &mu;_k for the same pair of surfaces (it takes more force to start sliding than to keep sliding). N is the normal force, not necessarily equal to mg (depends on the situation).
+  </div>
+  <h3>Inclined Planes</h3>
+  <p>On an incline at angle &theta;, you resolve weight into components parallel and perpendicular to the surface. The component pulling the object down the incline is mg sin&theta;. The normal force equals mg cos&theta; (on a frictionless incline with no other vertical forces).</p>
+  <div class="formula-box">
+    <div class="formula-label">Incline Components</div>
+    <code>F_parallel = mg sin&theta;</code> (down the ramp)
+    <br><code>F_perpendicular = mg cos&theta;</code> (into the surface)
+    <br><code>N = mg cos&theta;</code> (on a simple incline)
+  </div>
+  <h3>Uniform Circular Motion</h3>
+  <p>An object moving in a circle at constant speed is accelerating because its direction is constantly changing. The acceleration points toward the center of the circle (centripetal). The force causing this acceleration is centripetal force, which is not a new force but rather the net inward force (gravity, tension, friction, normal force, etc.).</p>
+  <div class="formula-box">
+    <div class="formula-label">Circular Motion</div>
+    <code>a_c = v&sup2; / r</code>
+    <br><code>F_c = mv&sup2; / r</code>
+    <br><code>Period: T = 2&pi;r / v</code>
+  </div>
+  <div class="highlight-box">
+    <strong>There is no outward "centrifugal force" in physics.</strong> What you feel is your body's inertia resisting the inward acceleration. The only real force is centripetal (inward).
+  </div>
+</div>
+
+<!-- ============ SECTION 05 ============ -->
+<div class="section-card" id="work-energy">
+  <h2><span class="sec-num">05</span>Work, Energy &amp; Power</h2>
+  <p>Work and energy provide an alternative to Newton's laws for solving mechanics problems. Energy is a scalar, so you avoid vector decomposition. The work-energy theorem and conservation of energy are two of the most powerful tools in physics.</p>
+  <div class="formula-box">
+    <div class="formula-label">Work</div>
+    <code>W = Fd cos&theta;</code>
+    <br><br>W = work (J), F = force (N), d = displacement (m), &theta; = angle between force and displacement. If &theta; = 0&deg;, W = Fd. If &theta; = 90&deg;, W = 0 (force perpendicular to motion does no work). If &theta; > 90&deg;, work is negative.
+  </div>
+  <h3>Types of Energy</h3>
+  <table class="fact-table">
+    <tr><th>Type</th><th>Formula</th><th>Description</th></tr>
+    <tr><td>Kinetic energy</td><td><code>KE = &frac12;mv&sup2;</code></td><td>Energy of motion</td></tr>
+    <tr><td>Gravitational PE</td><td><code>PE = mgh</code></td><td>Energy due to height above reference point</td></tr>
+    <tr><td>Elastic PE</td><td><code>PE_s = &frac12;kx&sup2;</code></td><td>Energy stored in a compressed/stretched spring</td></tr>
+  </table>
+  <div class="formula-box">
+    <div class="formula-label">Work-Energy Theorem</div>
+    <code>W_net = &Delta;KE = &frac12;mv&sup2; - &frac12;mv&#8320;&sup2;</code>
+    <br><br>The net work done on an object equals its change in kinetic energy.
+  </div>
+  <div class="formula-box">
+    <div class="formula-label">Conservation of Energy</div>
+    <code>KE_i + PE_i + W_nc = KE_f + PE_f</code>
+    <br><br>If only conservative forces act (no friction, no applied force), W_nc = 0 and total mechanical energy is conserved: KE_i + PE_i = KE_f + PE_f.
+  </div>
+  <div class="formula-box">
+    <div class="formula-label">Power</div>
+    <code>P = W / t = Fv</code>
+    <br>Units: watts (W). 1 horsepower = 746 W.
+  </div>
+  <div class="mnemonic-box">
+    <div class="mnemonic-label">Remember</div>
+    <strong>Conservative forces</strong> (gravity, springs) have associated PE and conserve mechanical energy. <strong>Nonconservative forces</strong> (friction, air resistance, applied pushes) change total mechanical energy. Friction always removes mechanical energy (converts to heat).
+  </div>
+</div>
+
+<!-- ============ SECTION 06 ============ -->
+<div class="section-card" id="momentum">
+  <h2><span class="sec-num">06</span>Momentum &amp; Collisions</h2>
+  <p>Momentum is a measure of how hard it is to stop a moving object. Like energy, momentum is conserved in a closed system, making it extremely useful for collision and explosion problems.</p>
+  <div class="formula-box">
+    <div class="formula-label">Momentum</div>
+    <code>p = mv</code>
+    <br>Units: kg &middot; m/s. Momentum is a vector (same direction as velocity).
+  </div>
+  <div class="formula-box">
+    <div class="formula-label">Impulse-Momentum Theorem</div>
+    <code>J = F&Delta;t = &Delta;p = mv_f - mv_i</code>
+    <br><br>Impulse (J) is the change in momentum. A longer collision time means less force (this is why airbags and crumple zones work).
+  </div>
+  <div class="formula-box">
+    <div class="formula-label">Conservation of Momentum</div>
+    <code>m&#8321;v&#8321;i + m&#8322;v&#8322;i = m&#8321;v&#8321;f + m&#8322;v&#8322;f</code>
+    <br><br>Total momentum before = total momentum after, provided no external net force acts on the system.
+  </div>
+  <h3>Types of Collisions</h3>
+  <table class="fact-table">
+    <tr><th>Type</th><th>Momentum Conserved?</th><th>KE Conserved?</th><th>Description</th></tr>
+    <tr><td>Elastic</td><td>Yes</td><td>Yes</td><td>Objects bounce apart; no energy lost (ideal)</td></tr>
+    <tr><td>Inelastic</td><td>Yes</td><td>No</td><td>Some KE converted to heat/sound/deformation</td></tr>
+    <tr><td>Perfectly inelastic</td><td>Yes</td><td>No (max loss)</td><td>Objects stick together after collision</td></tr>
+  </table>
+  <div class="highlight-box">
+    <strong>Momentum is always conserved in all collision types</strong> (as long as no external net force). Kinetic energy is only conserved in perfectly elastic collisions. In a perfectly inelastic collision, the objects stick together: <code>(m&#8321; + m&#8322;)v_f = m&#8321;v&#8321;i + m&#8322;v&#8322;i</code>.
+  </div>
+</div>
+
+<!-- ============ SECTION 07 ============ -->
+<div class="section-card" id="rotation">
+  <h2><span class="sec-num">07</span>Rotational Motion &amp; Torque</h2>
+  <p>Rotational motion has analogues for every linear quantity. Angle replaces displacement, angular velocity replaces linear velocity, and torque replaces force. Understanding these parallels makes the topic much more manageable.</p>
+  <h3>Rotational Variables</h3>
+  <table class="fact-table">
+    <tr><th>Linear</th><th>Rotational</th><th>Symbol</th><th>Unit</th></tr>
+    <tr><td>Displacement (x)</td><td>Angular displacement</td><td>&theta;</td><td>radians (rad)</td></tr>
+    <tr><td>Velocity (v)</td><td>Angular velocity</td><td>&omega;</td><td>rad/s</td></tr>
+    <tr><td>Acceleration (a)</td><td>Angular acceleration</td><td>&alpha;</td><td>rad/s&sup2;</td></tr>
+    <tr><td>Mass (m)</td><td>Moment of inertia</td><td>I</td><td>kg &middot; m&sup2;</td></tr>
+    <tr><td>Force (F)</td><td>Torque</td><td>&tau;</td><td>N &middot; m</td></tr>
+    <tr><td>Momentum (p)</td><td>Angular momentum</td><td>L</td><td>kg &middot; m&sup2;/s</td></tr>
+  </table>
+  <div class="formula-box">
+    <div class="formula-label">Torque</div>
+    <code>&tau; = rF sin&theta;</code>
+    <br><br>r = distance from the pivot (lever arm), F = force, &theta; = angle between r and F. Torque is maximized when force is perpendicular to the lever arm (&theta; = 90&deg;).
+  </div>
+  <div class="formula-box">
+    <div class="formula-label">Key Rotational Equations</div>
+    <code>&Sigma;&tau; = I&alpha;</code> (Newton's 2nd law for rotation)
+    <br><code>v = r&omega;</code> (linear-angular link)
+    <br><code>a_t = r&alpha;</code> (tangential acceleration)
+    <br><code>KE_rot = &frac12;I&omega;&sup2;</code>
+    <br><code>L = I&omega;</code> (angular momentum)
+  </div>
+  <h3>Static Equilibrium</h3>
+  <p>An object is in static equilibrium when it has zero net force (&Sigma;F = 0) and zero net torque (&Sigma;&tau; = 0). This means no translation and no rotation. You can choose any point as the pivot when summing torques.</p>
+  <div class="mnemonic-box">
+    <div class="mnemonic-label">Remember</div>
+    <strong>Conservation of angular momentum:</strong> if no external torque acts, L = I&omega; is constant. When a spinning ice skater pulls her arms in, I decreases and &omega; increases to keep L the same.
+  </div>
+</div>
+
+<!-- ============ SECTION 08 ============ -->
+<div class="section-card" id="gravity">
+  <h2><span class="sec-num">08</span>Gravity &amp; Orbits</h2>
+  <p>Newton's law of universal gravitation describes the attractive force between any two objects with mass. It explains everything from falling apples to planetary orbits.</p>
+  <div class="formula-box">
+    <div class="formula-label">Universal Gravitation</div>
+    <code>F = Gm&#8321;m&#8322; / r&sup2;</code>
+    <br><br>G = 6.674 &times; 10&#8315;&sup1;&sup1; N &middot; m&sup2;/kg&sup2;. r is measured center-to-center. Force is always attractive.
+  </div>
+  <div class="formula-box">
+    <div class="formula-label">Gravitational Acceleration</div>
+    <code>g = GM / r&sup2;</code>
+    <br><br>At Earth's surface: g &asymp; 9.8 m/s&sup2;. As you move farther from Earth's center, g decreases.
+  </div>
+  <h3>Orbits</h3>
+  <p>For a circular orbit, gravity provides the centripetal force: GMm/r&sup2; = mv&sup2;/r. This gives orbital velocity v = &radic;(GM/r). Higher orbits are slower. A satellite in orbit is in continuous free fall, but its forward velocity keeps it from hitting the surface.</p>
+  <div class="formula-box">
+    <div class="formula-label">Kepler's Third Law</div>
+    <code>T&sup2; &prop; r&sup3;</code>
+    <br><br>The square of the orbital period is proportional to the cube of the orbital radius. For objects orbiting the same central body, T&sup2;/r&sup3; is constant.
+  </div>
+</div>
+
+<!-- ============ SECTION 09 ============ -->
+<div class="section-card" id="fluids">
+  <h2><span class="sec-num">09</span>Fluids &amp; Pressure</h2>
+  <p>Fluids include both liquids and gases. The physics of fluids centers on pressure, buoyancy, and the behavior of moving fluids.</p>
+  <div class="formula-box">
+    <div class="formula-label">Pressure</div>
+    <code>P = F / A</code>
+    <br>Units: pascal (Pa) = N/m&sup2;. Atmospheric pressure &asymp; 1.013 &times; 10&#8309; Pa = 1 atm.
+  </div>
+  <div class="formula-box">
+    <div class="formula-label">Fluid Pressure with Depth</div>
+    <code>P = P&#8320; + &rho;gh</code>
+    <br><br>&rho; = fluid density (kg/m&sup3;), h = depth, P&#8320; = surface pressure. Pressure increases linearly with depth and depends only on depth, not container shape (Pascal's principle).
+  </div>
+  <h3>Buoyancy</h3>
+  <div class="formula-box">
+    <div class="formula-label">Archimedes' Principle</div>
+    <code>F_b = &rho;_fluid &middot; V_displaced &middot; g</code>
+    <br><br>The buoyant force equals the weight of the fluid displaced. An object floats if its average density is less than the fluid density.
+  </div>
+  <h3>Moving Fluids</h3>
+  <div class="formula-box">
+    <div class="formula-label">Continuity Equation</div>
+    <code>A&#8321;v&#8321; = A&#8322;v&#8322;</code>
+    <br>Where the pipe narrows, fluid speeds up (and vice versa). Volume flow rate is constant.
+  </div>
+  <div class="formula-box">
+    <div class="formula-label">Bernoulli's Equation</div>
+    <code>P + &frac12;&rho;v&sup2; + &rho;gh = constant</code>
+    <br><br>Where fluid speeds up, pressure drops (and vice versa). This explains airplane lift, shower curtain pull-in, and atomizer sprays.
+  </div>
+</div>
+
+<!-- ============ SECTION 10 ============ -->
+<div class="section-card" id="thermo">
+  <h2><span class="sec-num">10</span>Temperature &amp; Heat</h2>
+  <p>Thermodynamics deals with heat, temperature, and energy transfer. Temperature measures average kinetic energy of particles. Heat is energy transferred due to a temperature difference.</p>
+  <h3>Temperature Scales</h3>
+  <div class="formula-box">
+    <div class="formula-label">Conversions</div>
+    <code>K = &deg;C + 273.15</code>
+    <br><code>&deg;C = (&deg;F - 32) &times; 5/9</code>
+    <br><br>Absolute zero = 0 K = -273.15&deg;C. Water freezes at 273 K (0&deg;C), boils at 373 K (100&deg;C).
+  </div>
+  <h3>Thermal Expansion</h3>
+  <div class="formula-box">
+    <div class="formula-label">Linear Expansion</div>
+    <code>&Delta;L = &alpha;L&#8320;&Delta;T</code>
+    <br>&alpha; = coefficient of linear expansion. Most solids expand when heated.
+  </div>
+  <h3>Heat Transfer</h3>
+  <div class="formula-box">
+    <div class="formula-label">Specific Heat (no phase change)</div>
+    <code>Q = mc&Delta;T</code>
+    <br>Q = heat (J), m = mass (kg), c = specific heat (J/kg&middot;K), &Delta;T = temperature change. Water: c = 4186 J/kg&middot;K (very high, which is why water resists temperature change).
+  </div>
+  <div class="formula-box">
+    <div class="formula-label">Latent Heat (phase change)</div>
+    <code>Q = mL</code>
+    <br>L = latent heat of fusion (melting/freezing) or vaporization (boiling/condensing). During a phase change, temperature stays constant while energy is absorbed or released.
+  </div>
+  <h3>Laws of Thermodynamics</h3>
+  <table class="fact-table">
+    <tr><th>Law</th><th>Statement</th></tr>
+    <tr><td>0th</td><td>If A is in thermal equilibrium with B, and B with C, then A is in equilibrium with C (basis for thermometers)</td></tr>
+    <tr><td>1st</td><td>&Delta;U = Q - W. Energy is conserved. Heat added to a system goes into internal energy or work done by the system.</td></tr>
+    <tr><td>2nd</td><td>Heat flows spontaneously from hot to cold, never the reverse. Entropy of an isolated system always increases.</td></tr>
+    <tr><td>3rd</td><td>Absolute zero can never be reached.</td></tr>
+  </table>
+  <div class="highlight-box">
+    <strong>Three modes of heat transfer:</strong> conduction (direct contact, molecular collisions), convection (bulk fluid motion, warm rises), radiation (electromagnetic waves, no medium needed).
+  </div>
+</div>
+
+<!-- ============ SECTION 11 ============ -->
+<div class="section-card" id="waves">
+  <h2><span class="sec-num">11</span>Waves &amp; Sound</h2>
+  <p>A wave transports energy without transporting matter. You need to know the basic wave properties, the difference between transverse and longitudinal waves, and the key behaviors of sound.</p>
+  <h3>Wave Properties</h3>
+  <table class="fact-table">
+    <tr><th>Property</th><th>Symbol</th><th>Definition</th><th>Unit</th></tr>
+    <tr><td>Wavelength</td><td>&lambda;</td><td>Distance between two consecutive identical points (crest to crest)</td><td>m</td></tr>
+    <tr><td>Frequency</td><td>f</td><td>Number of complete cycles per second</td><td>Hz (1/s)</td></tr>
+    <tr><td>Period</td><td>T</td><td>Time for one complete cycle</td><td>s</td></tr>
+    <tr><td>Amplitude</td><td>A</td><td>Maximum displacement from equilibrium</td><td>m</td></tr>
+    <tr><td>Wave speed</td><td>v</td><td>Speed at which the wave pattern moves</td><td>m/s</td></tr>
+  </table>
+  <div class="formula-box">
+    <div class="formula-label">Wave Speed Equation</div>
+    <code>v = f&lambda;</code>
+    <br><code>f = 1/T</code>
+  </div>
+  <h3>Transverse vs. Longitudinal</h3>
+  <table class="fact-table">
+    <tr><th>Type</th><th>Particle Motion</th><th>Examples</th></tr>
+    <tr><td>Transverse</td><td>Perpendicular to wave direction</td><td>Light, waves on a string, S-waves</td></tr>
+    <tr><td>Longitudinal</td><td>Parallel to wave direction</td><td>Sound, P-waves, compression springs</td></tr>
+  </table>
+  <h3>Sound</h3>
+  <p>Sound is a longitudinal mechanical wave that requires a medium (it cannot travel through a vacuum). Speed of sound in air at 20&deg;C &asymp; 343 m/s. Sound travels faster in solids than in liquids, and faster in liquids than in gases. Pitch corresponds to frequency (high frequency = high pitch). Loudness corresponds to amplitude.</p>
+  <h3>Wave Phenomena</h3>
+  <table class="fact-table">
+    <tr><th>Phenomenon</th><th>Description</th></tr>
+    <tr><td>Reflection</td><td>Wave bounces off a surface. Angle of incidence = angle of reflection.</td></tr>
+    <tr><td>Refraction</td><td>Wave changes direction when entering a new medium (speed changes).</td></tr>
+    <tr><td>Diffraction</td><td>Wave bends around obstacles or through openings.</td></tr>
+    <tr><td>Interference</td><td>Two waves overlap. Constructive (in phase, amplitude adds). Destructive (out of phase, amplitude cancels).</td></tr>
+    <tr><td>Doppler effect</td><td>Apparent frequency change when source and observer are in relative motion. Approaching = higher pitch. Receding = lower pitch.</td></tr>
+    <tr><td>Resonance</td><td>A system vibrates with maximum amplitude when driven at its natural frequency.</td></tr>
+  </table>
+  <div class="mnemonic-box">
+    <div class="mnemonic-label">Remember</div>
+    <strong>Doppler effect:</strong> Think of an ambulance. As it approaches, sound waves compress (shorter &lambda;, higher f, higher pitch). As it moves away, waves stretch (longer &lambda;, lower f, lower pitch).
+  </div>
+</div>
+
+<!-- ============================================================== -->
+<!-- =================== INTERACTIVE SECTIONS ===================== -->
+<!-- ============================================================== -->
+
+<div class="interactive-section" id="quiz">
+  <h2>Multiple Choice Quiz</h2>
+  <div class="quiz-progress">
+    <span>Question <span id="qCur">1</span> of <span id="qTot">30</span></span>
+    <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="qBar"></div></div>
+    <span class="quiz-score">Score: <span id="qScore">0</span></span>
+  </div>
+  <div id="qArea"></div>
+  <div class="quiz-nav">
+    <button class="quiz-btn" id="qSubmit" onclick="qCheck()">Check Answer</button>
+    <button class="quiz-btn" id="qNext" onclick="qAdvance()" style="display:none">Next Question</button>
+  </div>
+</div>
+
+<div class="interactive-section" id="flashcards">
+  <h2>Flashcards</h2>
+  <div class="fc-filters" id="fcFilters"></div>
+  <div class="fc-container">
+    <div class="fc-card-wrapper" onclick="fcFlip()">
+      <div class="fc-card" id="fcCard">
+        <div class="fc-front"><span class="fc-category" id="fcCat"></span><p id="fcQ"></p></div>
+        <div class="fc-back"><p id="fcA"></p></div>
+      </div>
+    </div>
+    <div class="fc-controls">
+      <button class="fc-nav-btn" onclick="fcPrev()">&larr; Prev</button>
+      <span class="fc-counter"><span id="fcIdx">1</span> / <span id="fcTot">0</span></span>
+      <button class="fc-nav-btn" onclick="fcNext()">Next &rarr;</button>
+    </div>
+  </div>
+</div>
+
+<div class="interactive-section" id="short-answer">
+  <h2>Short Answer Practice</h2>
+  <p style="color:var(--text-muted);margin-bottom:1.5rem">Answer in your own words. The grader checks for key concepts, not exact wording.</p>
+  <div id="saArea"></div>
+  <button class="quiz-btn" onclick="saGradeAll()" style="margin-top:1rem">Grade All Answers</button>
+</div>
+
+</div>
+
+<button class="back-to-top" id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})">&uarr;</button>
+
+<script>
+const QD=[
+{q:"The SI unit of force is the:",o:["kilogram","joule","newton","watt"],a:2,e:"Force is measured in newtons (N). 1 N = 1 kg*m/s^2."},
+{q:"A vector quantity has:",o:["Magnitude only","Direction only","Both magnitude and direction","Neither"],a:2,e:"Vectors have both magnitude and direction (e.g., velocity, force). Scalars have magnitude only (e.g., speed, mass)."},
+{q:"An object is dropped from rest. After 3 seconds (ignoring air resistance, g = 10 m/s^2), its speed is:",o:["10 m/s","20 m/s","30 m/s","45 m/s"],a:2,e:"v = v0 + at = 0 + (10)(3) = 30 m/s."},
+{q:"At the peak of its trajectory, a projectile's vertical velocity is:",o:["Maximum","Equal to horizontal velocity","Zero","Negative"],a:2,e:"At the highest point, the vertical component of velocity is zero. The horizontal component remains unchanged (no air resistance)."},
+{q:"Maximum range for a projectile on level ground occurs at what launch angle?",o:["30 degrees","45 degrees","60 degrees","90 degrees"],a:1,e:"45 degrees maximizes range because sin(2*45) = sin(90) = 1, the maximum value."},
+{q:"Newton's First Law is also called the law of:",o:["Acceleration","Action-reaction","Inertia","Gravity"],a:2,e:"The first law states that objects resist changes in motion. This tendency is called inertia."},
+{q:"A 5 kg object accelerates at 3 m/s^2. The net force on it is:",o:["1.67 N","8 N","15 N","45 N"],a:2,e:"F = ma = 5 x 3 = 15 N."},
+{q:"Mass and weight are different because:",o:["Mass is measured in newtons","Weight depends on gravitational field strength","They are actually the same thing","Mass changes with location"],a:1,e:"Mass (kg) is intrinsic. Weight (N) = mg depends on the local gravitational acceleration. An astronaut weighs less on the Moon but has the same mass."},
+{q:"Static friction is generally _____ than kinetic friction for the same surfaces.",o:["Less","Greater","Equal to","Unrelated to"],a:1,e:"The coefficient of static friction is greater than kinetic friction, meaning it takes more force to start an object sliding than to keep it sliding."},
+{q:"On a frictionless incline at angle theta, the component of gravity along the ramp is:",o:["mg","mg cos(theta)","mg sin(theta)","mg tan(theta)"],a:2,e:"The parallel component (down the ramp) is mg*sin(theta). The perpendicular component (into the surface) is mg*cos(theta)."},
+{q:"In uniform circular motion, the acceleration always points:",o:["In the direction of motion","Opposite the direction of motion","Toward the center of the circle","Away from the center"],a:2,e:"Centripetal acceleration always points toward the center of the circle. It changes the direction of velocity, not its magnitude."},
+{q:"A force does zero work when the angle between force and displacement is:",o:["0 degrees","45 degrees","90 degrees","180 degrees"],a:2,e:"W = Fd cos(theta). At 90 degrees, cos(90) = 0, so no work is done. Example: the normal force on an object sliding on a flat surface."},
+{q:"If you double an object's speed, its kinetic energy:",o:["Doubles","Triples","Quadruples","Stays the same"],a:2,e:"KE = 1/2 mv^2. Since KE depends on v^2, doubling v quadruples KE."},
+{q:"Which force is always nonconservative?",o:["Gravity","Spring force","Friction","Normal force doing no work"],a:2,e:"Friction converts mechanical energy to thermal energy. It is path-dependent and always nonconservative."},
+{q:"Power is defined as:",o:["Force times distance","Energy times time","Work divided by time","Mass times velocity"],a:2,e:"P = W/t. Power is the rate at which work is done (or energy is transferred). Units: watts (J/s)."},
+{q:"Momentum is conserved in:",o:["Only elastic collisions","Only inelastic collisions","All collisions with no external net force","No collisions"],a:2,e:"Momentum is conserved in all types of collisions (elastic, inelastic, perfectly inelastic) as long as no net external force acts on the system."},
+{q:"In a perfectly inelastic collision, the objects:",o:["Bounce off elastically","Pass through each other","Stick together","Explode apart"],a:2,e:"Perfectly inelastic = objects stick together. Momentum is conserved but kinetic energy is not (maximum KE loss)."},
+{q:"An airbag protects you by:",o:["Increasing the force of impact","Increasing the collision time, reducing force","Decreasing your momentum","Eliminating the impulse"],a:1,e:"J = F*delta_t. The impulse (change in momentum) is the same, but extending the time reduces the force."},
+{q:"Torque is maximized when the force is applied:",o:["Parallel to the lever arm","At the pivot point","Perpendicular to the lever arm","At any angle"],a:2,e:"Torque = rF sin(theta). Maximum when theta = 90 degrees (force perpendicular to lever arm)."},
+{q:"For static equilibrium, which conditions must be met?",o:["Sum of forces = 0 only","Sum of torques = 0 only","Both sum of forces = 0 and sum of torques = 0","Net force = ma"],a:2,e:"Static equilibrium requires zero net force (no translation) AND zero net torque (no rotation)."},
+{q:"According to Newton's law of gravitation, if the distance between two masses doubles, the gravitational force:",o:["Doubles","Halves","Becomes 1/4 as strong","Becomes 4 times as strong"],a:2,e:"F = Gm1m2/r^2. Force depends on 1/r^2, so doubling r reduces force to 1/4."},
+{q:"Pressure at a depth h in a fluid depends on:",o:["Container shape","Fluid density and depth","Volume of fluid above","Surface area"],a:1,e:"P = P0 + rho*g*h. Pressure depends on density and depth, not the shape of the container (Pascal's principle)."},
+{q:"An object floats when its average density is:",o:["Greater than the fluid","Equal to the fluid","Less than the fluid","Zero"],a:2,e:"By Archimedes' principle, an object floats when its average density is less than the fluid density (buoyant force >= weight)."},
+{q:"Bernoulli's principle states that where fluid speed increases, pressure:",o:["Increases","Decreases","Stays the same","Becomes zero"],a:1,e:"Bernoulli's equation: P + 1/2 rho v^2 + rho gh = constant. Higher speed means lower pressure."},
+{q:"The specific heat equation Q = mc(delta T) applies when:",o:["The substance changes phase","There is no phase change","Temperature stays constant","Pressure is zero"],a:1,e:"Q = mc*delta_T applies during temperature changes with no phase change. During phase changes, use Q = mL (latent heat)."},
+{q:"During a phase change (e.g., melting ice), the temperature:",o:["Increases rapidly","Decreases","Remains constant","Fluctuates"],a:2,e:"During a phase change, added energy breaks intermolecular bonds rather than increasing kinetic energy, so temperature stays constant."},
+{q:"The first law of thermodynamics is essentially a statement of:",o:["Conservation of momentum","Conservation of energy","Entropy increase","Newton's third law"],a:1,e:"The 1st law (delta_U = Q - W) says energy is conserved: heat added to a system becomes internal energy or work."},
+{q:"Sound cannot travel through:",o:["Water","Steel","Air","A vacuum"],a:3,e:"Sound is a mechanical wave requiring a medium. A vacuum contains no particles to transmit compression waves."},
+{q:"The Doppler effect causes an approaching source to sound:",o:["Louder","Quieter","Higher-pitched","Lower-pitched"],a:2,e:"As a source approaches, sound waves compress (shorter wavelength), resulting in a higher observed frequency (higher pitch)."},
+{q:"Constructive interference occurs when two waves are:",o:["Out of phase","In phase","At different frequencies","In a vacuum"],a:1,e:"In phase means crests align with crests. Amplitudes add together (constructive). Out of phase means crests align with troughs (destructive)."}
+];
+
+const FD=[
+{cat:"Units & Vectors",q:"SI unit of force?",a:"Newton (N) = kg*m/s^2"},
+{cat:"Units & Vectors",q:"SI unit of energy?",a:"Joule (J) = N*m = kg*m^2/s^2"},
+{cat:"Units & Vectors",q:"SI unit of power?",a:"Watt (W) = J/s"},
+{cat:"Units & Vectors",q:"SI unit of pressure?",a:"Pascal (Pa) = N/m^2"},
+{cat:"Units & Vectors",q:"Scalar vs. vector?",a:"Scalar: magnitude only (speed, mass, energy). Vector: magnitude + direction (velocity, force, acceleration)."},
+{cat:"Units & Vectors",q:"Vector component formulas?",a:"A_x = A*cos(theta), A_y = A*sin(theta). Magnitude: sqrt(Ax^2 + Ay^2)."},
+{cat:"Kinematics",q:"Four kinematic equations?",a:"v = v0 + at. dx = v0t + 1/2 at^2. v^2 = v0^2 + 2a*dx. dx = 1/2(v0+v)t."},
+{cat:"Kinematics",q:"Free fall acceleration?",a:"g = 9.8 m/s^2 downward. At the peak, v = 0 but a still = g."},
+{cat:"Kinematics",q:"Projectile motion: horizontal?",a:"Constant velocity: x = v0*cos(theta)*t. No horizontal acceleration (ignoring air resistance)."},
+{cat:"Kinematics",q:"Projectile motion: vertical?",a:"Accelerating at g: y = v0*sin(theta)*t - 1/2*g*t^2."},
+{cat:"Kinematics",q:"Max range angle?",a:"45 degrees on level ground. Complementary angles (30/60) give the same range."},
+{cat:"Kinematics",q:"Speed vs. velocity?",a:"Speed is scalar (how fast). Velocity is vector (how fast + direction)."},
+{cat:"Newton's Laws",q:"Newton's 1st Law?",a:"An object stays at rest or in constant velocity unless acted on by a net external force (law of inertia)."},
+{cat:"Newton's Laws",q:"Newton's 2nd Law?",a:"F_net = ma. Net force equals mass times acceleration."},
+{cat:"Newton's Laws",q:"Newton's 3rd Law?",a:"Every action has an equal and opposite reaction. Forces act on different objects."},
+{cat:"Newton's Laws",q:"Weight formula?",a:"W = mg. Weight is a force (N), mass is inertia (kg). They are not the same."},
+{cat:"Newton's Laws",q:"Normal force?",a:"Contact force perpendicular to surface. Adjusts to prevent penetration. Not always equal to mg."},
+{cat:"Newton's Laws",q:"Free-body diagram rules?",a:"Draw object as dot. Draw all forces ON the object as arrows. Label each. Choose coordinate axes."},
+{cat:"Friction & Circular",q:"Static vs. kinetic friction?",a:"Static: f_s <= mu_s*N (prevents motion). Kinetic: f_k = mu_k*N (during sliding). mu_s > mu_k."},
+{cat:"Friction & Circular",q:"Incline: parallel component?",a:"mg*sin(theta) pulls object down the ramp."},
+{cat:"Friction & Circular",q:"Incline: normal force?",a:"N = mg*cos(theta) on a simple incline."},
+{cat:"Friction & Circular",q:"Centripetal acceleration?",a:"a_c = v^2/r, always toward center. F_c = mv^2/r."},
+{cat:"Friction & Circular",q:"Centrifugal force?",a:"Not a real force. It is the sensation of inertia resisting inward acceleration."},
+{cat:"Work & Energy",q:"Work formula?",a:"W = Fd*cos(theta). Zero work if force is perpendicular to displacement."},
+{cat:"Work & Energy",q:"Kinetic energy?",a:"KE = 1/2 mv^2. Doubling speed quadruples KE."},
+{cat:"Work & Energy",q:"Gravitational PE?",a:"PE = mgh. Depends on height above reference point."},
+{cat:"Work & Energy",q:"Conservation of energy?",a:"KE_i + PE_i + W_nc = KE_f + PE_f. If no nonconservative forces, total mechanical energy is constant."},
+{cat:"Work & Energy",q:"Work-energy theorem?",a:"W_net = delta_KE = 1/2 mv^2 - 1/2 mv0^2."},
+{cat:"Work & Energy",q:"Power?",a:"P = W/t = Fv. Units: watts. 1 hp = 746 W."},
+{cat:"Work & Energy",q:"Conservative vs. nonconservative?",a:"Conservative (gravity, spring): have PE, path-independent. Nonconservative (friction): path-dependent, remove mechanical energy."},
+{cat:"Momentum",q:"Momentum formula?",a:"p = mv. Vector quantity (same direction as velocity). Units: kg*m/s."},
+{cat:"Momentum",q:"Impulse-momentum theorem?",a:"J = F*delta_t = delta_p. Longer time = less force for same impulse."},
+{cat:"Momentum",q:"Conservation of momentum?",a:"m1v1i + m2v2i = m1v1f + m2v2f. Always conserved if no net external force."},
+{cat:"Momentum",q:"Elastic collision?",a:"Both momentum and KE conserved. Objects bounce apart."},
+{cat:"Momentum",q:"Perfectly inelastic collision?",a:"Objects stick together. Momentum conserved, KE not (max loss). (m1+m2)vf = m1v1i + m2v2i."},
+{cat:"Rotation",q:"Torque formula?",a:"tau = rF*sin(theta). Max when force is perpendicular to lever arm."},
+{cat:"Rotation",q:"Newton's 2nd for rotation?",a:"Sum of tau = I*alpha. Moment of inertia times angular acceleration."},
+{cat:"Rotation",q:"Static equilibrium conditions?",a:"Sum F = 0 (no translation) AND Sum tau = 0 (no rotation)."},
+{cat:"Rotation",q:"Angular momentum?",a:"L = I*omega. Conserved if no external torque. Skater pulls arms in: I decreases, omega increases."},
+{cat:"Rotation",q:"Linear-angular link?",a:"v = r*omega. a_t = r*alpha."},
+{cat:"Gravity",q:"Universal gravitation?",a:"F = Gm1m2/r^2. G = 6.674 x 10^-11 N*m^2/kg^2. Always attractive, depends on 1/r^2."},
+{cat:"Gravity",q:"Kepler's Third Law?",a:"T^2 proportional to r^3. Farther orbits have longer periods."},
+{cat:"Gravity",q:"Orbital velocity?",a:"v = sqrt(GM/r). Higher orbits are slower."},
+{cat:"Fluids",q:"Pressure formula?",a:"P = F/A. Units: pascal (Pa) = N/m^2. 1 atm = 1.013 x 10^5 Pa."},
+{cat:"Fluids",q:"Pressure with depth?",a:"P = P0 + rho*g*h. Increases linearly with depth. Independent of container shape."},
+{cat:"Fluids",q:"Archimedes' principle?",a:"Buoyant force = weight of displaced fluid: F_b = rho_fluid * V_displaced * g."},
+{cat:"Fluids",q:"Bernoulli's principle?",a:"Where fluid speed increases, pressure decreases. P + 1/2 rho v^2 + rho gh = constant."},
+{cat:"Fluids",q:"Continuity equation?",a:"A1*v1 = A2*v2. Narrower pipe = faster flow."},
+{cat:"Thermo",q:"Q = mc*deltaT applies when?",a:"During temperature change with NO phase change. c = specific heat."},
+{cat:"Thermo",q:"Q = mL applies when?",a:"During a phase change. Temperature stays constant. L = latent heat."},
+{cat:"Thermo",q:"Specific heat of water?",a:"4186 J/(kg*K). Very high, which is why water resists temperature change."},
+{cat:"Thermo",q:"First law of thermodynamics?",a:"delta_U = Q - W. Conservation of energy: heat in = internal energy change + work out."},
+{cat:"Thermo",q:"Second law?",a:"Heat flows hot to cold spontaneously. Entropy of isolated system always increases."},
+{cat:"Thermo",q:"Three modes of heat transfer?",a:"Conduction (contact), convection (fluid motion), radiation (EM waves, no medium needed)."},
+{cat:"Waves",q:"Wave speed equation?",a:"v = f*lambda. f = 1/T."},
+{cat:"Waves",q:"Transverse vs. longitudinal?",a:"Transverse: vibration perpendicular to wave direction (light, strings). Longitudinal: parallel (sound)."},
+{cat:"Waves",q:"Sound speed in air?",a:"~343 m/s at 20 C. Faster in solids > liquids > gases."},
+{cat:"Waves",q:"Doppler effect?",a:"Approaching source = higher pitch (compressed waves). Receding = lower pitch (stretched waves)."},
+{cat:"Waves",q:"Constructive vs. destructive interference?",a:"Constructive: waves in phase, amplitudes add. Destructive: out of phase, amplitudes cancel."},
+{cat:"Waves",q:"Resonance?",a:"Maximum amplitude when driving frequency matches natural frequency of the system."}
+];
+
+const SA=[
+{q:"State Newton's three laws of motion. Give a real-world example for each law.",
+concepts:[
+  {term:"1st law / inertia",synonyms:["first law","1st law","inertia","at rest stays at rest","constant velocity","no.*net force"],weight:2},
+  {term:"2nd law / F=ma",synonyms:["second law","2nd law","f.*=.*ma","net force.*mass.*acceleration"],weight:2},
+  {term:"3rd law / action-reaction",synonyms:["third law","3rd law","action.*reaction","equal.*opposite"],weight:2},
+  {term:"examples",synonyms:["seatbelt","push","kick","rocket","walk","ball","car","book","table"],weight:2}
+],model:"1st Law (Inertia): An object stays at rest or moves at constant velocity unless a net external force acts on it. Example: a passenger lurches forward when a car stops suddenly because their body wants to keep moving. 2nd Law (F=ma): Net force equals mass times acceleration. Example: pushing a heavy cart requires more force to accelerate than a light cart. 3rd Law (Action-Reaction): Every action has an equal and opposite reaction on a different object. Example: when you push off the ground while walking, the ground pushes you forward."},
+{q:"Explain the difference between kinetic energy and potential energy. State the formulas for each and describe conservation of mechanical energy.",
+concepts:[
+  {term:"KE = 1/2 mv^2",synonyms:["kinetic","1/2.*mv","motion.*energy"],weight:2},
+  {term:"PE = mgh",synonyms:["potential","mgh","height.*energy","gravitational.*pe"],weight:2},
+  {term:"conservation",synonyms:["conserv","ke.*pe.*constant","total.*mechanical","doesn't change"],weight:2},
+  {term:"conservative forces",synonyms:["conservative","gravity","no friction","no nonconservative"],weight:1},
+  {term:"nonconservative / friction",synonyms:["friction","nonconservative","heat","dissipat"],weight:1}
+],model:"Kinetic energy (KE = 1/2 mv^2) is energy of motion. Gravitational potential energy (PE = mgh) is stored energy due to an object's height above a reference point. Conservation of mechanical energy states that if only conservative forces (gravity, springs) act, the total mechanical energy (KE + PE) remains constant. Energy converts between KE and PE: a falling ball loses PE and gains KE. If nonconservative forces like friction act, mechanical energy is lost as heat."},
+{q:"Compare elastic and perfectly inelastic collisions. What is conserved in each? Give an example of each type.",
+concepts:[
+  {term:"momentum conserved in both",synonyms:["momentum.*conserv","both.*momentum"],weight:2},
+  {term:"elastic: KE conserved",synonyms:["elastic.*ke.*conserv","elastic.*kinetic.*conserv","bounce"],weight:2},
+  {term:"inelastic: KE not conserved",synonyms:["inelastic.*ke.*not","stick.*together","inelastic.*kinetic.*lost"],weight:2},
+  {term:"examples",synonyms:["billiard","pool","car.*crash","bullet","clay","ball"],weight:2}
+],model:"In both types, total momentum is conserved (no external net force). In an elastic collision, kinetic energy is also conserved; objects bounce apart (e.g., billiard balls). In a perfectly inelastic collision, the objects stick together and kinetic energy is not conserved (maximum KE loss, converted to heat, sound, deformation). Example: two cars crashing and crumpling together. The formula is (m1+m2)vf = m1v1i + m2v2i."},
+{q:"Explain torque and static equilibrium. What two conditions must be satisfied for an object to be in static equilibrium?",
+concepts:[
+  {term:"torque = rF sin(theta)",synonyms:["torque","r.*f.*sin","lever arm","rotat"],weight:2},
+  {term:"sum F = 0",synonyms:["sum.*f.*=.*0","net force.*zero","no.*translat","forces.*balance"],weight:2},
+  {term:"sum tau = 0",synonyms:["sum.*tau.*=.*0","sum.*torque.*=.*0","net torque.*zero","no.*rotat"],weight:2},
+  {term:"perpendicular maximizes",synonyms:["perpendicular","90","maximum.*torque"],weight:1}
+],model:"Torque (tau = rF sin theta) is the rotational equivalent of force. It depends on the force magnitude, the distance from the pivot (lever arm), and the angle between them. Torque is maximized when the force is perpendicular to the lever arm. For static equilibrium, two conditions must be met: the sum of all forces must be zero (no translational acceleration) and the sum of all torques about any point must be zero (no rotational acceleration)."},
+{q:"Explain Archimedes' principle and Bernoulli's principle. How does each apply to real-world situations?",
+concepts:[
+  {term:"Archimedes: buoyant force = weight displaced",synonyms:["archimedes","buoyant.*weight.*displaced","rho.*v.*g","float"],weight:2},
+  {term:"less dense floats",synonyms:["less dense.*float","density.*less","lighter.*float"],weight:1},
+  {term:"Bernoulli: speed up = pressure down",synonyms:["bernoulli","speed.*pressure","fast.*low pressure"],weight:2},
+  {term:"applications",synonyms:["airplane","lift","boat","ship","shower","atomizer","wing"],weight:2}
+],model:"Archimedes' principle: the buoyant force on a submerged object equals the weight of the fluid displaced (F_b = rho_fluid * V_displaced * g). An object floats if its average density is less than the fluid density. This explains why ships (mostly air-filled) float despite being made of steel. Bernoulli's principle: where fluid speed increases, pressure decreases (P + 1/2 rho v^2 + rho gh = constant). This explains airplane lift: air moves faster over the curved top of a wing, creating lower pressure above and net upward force."},
+{q:"Describe the first and second laws of thermodynamics. Explain the difference between heat and temperature, and name the three modes of heat transfer.",
+concepts:[
+  {term:"1st law: conservation",synonyms:["first law","1st law","delta.*u.*=.*q","conservation.*energy"],weight:2},
+  {term:"2nd law: entropy",synonyms:["second law","2nd law","entropy","hot.*cold","spontaneous"],weight:2},
+  {term:"heat vs. temperature",synonyms:["heat.*energy.*transfer","temperature.*average.*kinetic","heat.*not.*temperature"],weight:2},
+  {term:"three modes",synonyms:["conduction","convection","radiation"],weight:2}
+],model:"The 1st law (delta_U = Q - W) states that energy is conserved: heat added to a system equals the change in internal energy plus work done by the system. The 2nd law states that heat flows spontaneously from hot to cold, and entropy of an isolated system always increases. Temperature measures average kinetic energy of particles. Heat is energy transferred between objects due to a temperature difference. Three modes of heat transfer: conduction (direct contact), convection (bulk fluid motion), and radiation (electromagnetic waves requiring no medium)."},
+{q:"Explain the wave speed equation, the difference between transverse and longitudinal waves, and the Doppler effect.",
+concepts:[
+  {term:"v = f*lambda",synonyms:["v.*=.*f.*lambda","speed.*frequency.*wavelength"],weight:2},
+  {term:"transverse",synonyms:["transverse","perpendicular.*wave","light","string"],weight:2},
+  {term:"longitudinal",synonyms:["longitudinal","parallel.*wave","sound","compression"],weight:2},
+  {term:"Doppler effect",synonyms:["doppler","approach.*higher","reced.*lower","pitch.*change","frequency.*change"],weight:2},
+  {term:"sound needs medium",synonyms:["medium","vacuum.*no sound","mechanical"],weight:1}
+],model:"Wave speed equals frequency times wavelength: v = f*lambda. In transverse waves, particles vibrate perpendicular to the wave direction (examples: light, waves on a string). In longitudinal waves, particles vibrate parallel to the wave direction (examples: sound, compression of a spring). Sound is a longitudinal mechanical wave that requires a medium. The Doppler effect is the apparent change in frequency when a source and observer are in relative motion. An approaching source sounds higher-pitched (waves compressed, higher f). A receding source sounds lower-pitched (waves stretched, lower f)."},
+{q:"A ball is thrown horizontally from a cliff. Describe the horizontal and vertical components of its motion. What determines how far it travels horizontally?",
+concepts:[
+  {term:"horizontal: constant velocity",synonyms:["horizontal.*constant","no.*horizontal.*accel","constant.*velocity"],weight:2},
+  {term:"vertical: accelerating at g",synonyms:["vertical.*accel","g.*9.8","free fall","gravity"],weight:2},
+  {term:"independent components",synonyms:["independent","separate","don't affect each other"],weight:1},
+  {term:"range depends on speed and time",synonyms:["range","horizontal.*speed.*time","initial.*velocity","height.*determines.*time"],weight:2},
+  {term:"hits ground same time as dropped",synonyms:["same time","dropped.*same","horizontal.*doesn't affect.*fall"],weight:1}
+],model:"The horizontal and vertical motions are independent. Horizontally, there is no acceleration (ignoring air resistance), so the ball moves at constant velocity: x = v0*t. Vertically, the ball accelerates downward at g = 9.8 m/s^2, just like a dropped object: y = 1/2*g*t^2. The horizontal range depends on the initial horizontal speed and the time in the air (which is determined by the height of the cliff). A ball thrown horizontally from a cliff hits the ground at the same time as a ball dropped vertically from the same height, because the horizontal velocity does not affect the vertical fall."}
+];
+
+let qI=0,qS=0,qDone=false;
+function qRender(){const d=QD[qI];let h='<div class="quiz-question"><p>'+(qI+1)+'. '+d.q+'</p><div class="quiz-options">';d.o.forEach((o,i)=>{h+='<label id="qo'+i+'"><input type="radio" name="q" value="'+i+'"> '+o+'</label>';});h+='</div><div class="quiz-explanation" id="qExp">'+d.e+'</div></div>';document.getElementById('qArea').innerHTML=h;document.getElementById('qCur').textContent=qI+1;document.getElementById('qTot').textContent=QD.length;document.getElementById('qBar').style.width=(qI/QD.length*100)+'%';document.getElementById('qSubmit').style.display='inline-block';document.getElementById('qNext').style.display='none';qDone=false;}
+function qCheck(){if(qDone)return;const s=document.querySelector('input[name="q"]:checked');if(!s)return;qDone=true;const v=+s.value,d=QD[qI];document.querySelectorAll('.quiz-options label').forEach(l=>l.style.pointerEvents='none');if(v===d.a){qS++;document.getElementById('qo'+v).classList.add('correct');}else{document.getElementById('qo'+v).classList.add('incorrect');document.getElementById('qo'+d.a).classList.add('correct');}document.getElementById('qScore').textContent=qS;document.getElementById('qExp').style.display='block';document.getElementById('qSubmit').style.display='none';if(qI<QD.length-1)document.getElementById('qNext').style.display='inline-block';else{document.getElementById('qBar').style.width='100%';setTimeout(()=>{const p=Math.round(qS/QD.length*100);document.getElementById('qArea').innerHTML='<div class="quiz-result"><h3>Quiz Complete!</h3><p style="font-size:1.2rem;margin-bottom:.5rem">'+qS+' / '+QD.length+' ('+p+'%)</p><p style="color:var(--text-muted)">'+(p>=80?'Excellent work!':p>=60?'Good effort. Review the sections you missed.':'Keep studying and try again.')+'</p></div>';document.getElementById('qNext').style.display='none';},1200);}}
+function qAdvance(){qI++;qRender();}
+
+let fcF=[...FD],fcI=0;
+function fcRenderFilters(){const cats=[...new Set(FD.map(c=>c.cat))];let h='<button class="fc-filter-btn active" onclick="fcFilter(\'all\',this)">All</button>';cats.forEach(c=>{h+='<button class="fc-filter-btn" onclick="fcFilter(\''+c+'\',this)">'+c+'</button>';});document.getElementById('fcFilters').innerHTML=h;}
+function fcFilter(cat,btn){fcF=cat==='all'?[...FD]:FD.filter(c=>c.cat===cat);fcI=0;document.querySelectorAll('.fc-filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');fcRender();}
+function fcRender(){if(!fcF.length)return;const c=fcF[fcI];document.getElementById('fcCat').textContent=c.cat;document.getElementById('fcQ').textContent=c.q;document.getElementById('fcA').textContent=c.a;document.getElementById('fcIdx').textContent=fcI+1;document.getElementById('fcTot').textContent=fcF.length;document.getElementById('fcCard').classList.remove('flipped');}
+function fcFlip(){document.getElementById('fcCard').classList.toggle('flipped');}
+function fcNext(){fcI=(fcI+1)%fcF.length;fcRender();}
+function fcPrev(){fcI=(fcI-1+fcF.length)%fcF.length;fcRender();}
+
+function saRender(){let h='';SA.forEach((item,i)=>{h+='<div class="sa-question"><p class="sa-prompt">'+(i+1)+'. '+item.q+'</p><textarea id="saI'+i+'" placeholder="Type your answer here..."></textarea><div class="sa-feedback" id="saFb'+i+'"><div class="sa-score-bar"><div class="sa-score-fill" id="saFill'+i+'"></div></div><div class="sa-score-text" id="saPct'+i+'"></div><div class="sa-tags" id="saTags'+i+'"></div><button class="sa-model-toggle" onclick="saToggle('+i+')">Show Model Answer</button><div class="sa-model-answer" id="saModel'+i+'">'+item.model+'</div></div></div>';});document.getElementById('saArea').innerHTML=h;}
+function saGradeAll(){SA.forEach((item,i)=>{const input=document.getElementById('saI'+i).value.toLowerCase();let earned=0,total=0,tags='';const wc=input.trim().split(/\s+/).filter(w=>w).length;item.concepts.forEach(c=>{total+=c.weight;let found=false;for(let s of c.synonyms){if(s.includes('.*')){try{if(new RegExp(s,'i').test(input)){found=true;break;}}catch(e){}}else if(input.includes(s.toLowerCase())){found=true;break;}}if(found){earned+=c.weight;tags+='<span class="sa-tag hit">'+c.term+'</span>';}else{tags+='<span class="sa-tag miss">'+c.term+'</span>';}});let bonus=0;if(wc>40)bonus=Math.min(0.1,((wc-40)/100)*0.1);let pct=Math.min(100,Math.round((earned/total+bonus)*100));const fill=document.getElementById('saFill'+i);fill.style.width=pct+'%';fill.style.background=pct>=70?'#4caf50':pct>=40?'#ff9800':'#e57373';document.getElementById('saPct'+i).textContent=pct+'% concept match';document.getElementById('saTags'+i).innerHTML=tags;document.getElementById('saFb'+i).style.display='block';});}
+function saToggle(i){const el=document.getElementById('saModel'+i);el.style.display=el.style.display==='block'?'none':'block';}
+
+window.addEventListener('scroll',()=>{document.getElementById('btt').classList.toggle('visible',window.scrollY>400);});
+qRender();fcRenderFilters();fcRender();saRender();
+</script>
+</div>
+</body>
+</html>
